@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>📱 Final Phone Cost Calculator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f4f8;
+      padding: 30px;
+      max-width: 650px;
+      margin: auto;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #0078D7;
+    }
+    label {
+      margin-top: 15px;
+      display: block;
+      font-weight: bold;
+    }
+    input {
+      padding: 8px;
+      width: 100%;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #0078D7;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .result {
+      background-color: white;
+      margin-top: 25px;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    .main-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #17a2b8;
+      margin-bottom: 10px;
+    }
+    .total-box {
+      background-color: #d1ecf1;
+      border-left: 6px solid #17a2b8;
+      padding: 15px;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .discount-highlight {
+      margin-top: 0;
+      margin-bottom: 30px;
+      padding: 25px;
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold;
+      color: #28a745;
+      animation: pulse 1.2s infinite;
+      border: 3px dashed #28a745;
+      background-color: #eafbe7;
+      border-radius: 10px;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .small-text {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.6;
+      border-top: 1px solid #ccc;
+      padding-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📱 Phone Cost & Special Discount</h1>
+
+  <label for="phoneCost">Enter Phone Cost (x):</label>
+  <input type="number" id="phoneCost" placeholder="e.g. 14000">
+
+  <label for="deliveryCharge">Enter Delivery Charge (y):</label>
+  <input type="number" id="deliveryCharge" placeholder="e.g. 300">
+
+  <button onclick="calculate()">Calculate</button>
+
+  <div class="result" id="output"></div>
+
+  <script>
+    function calculate() {
+      const x = parseFloat(document.getElementById('phoneCost').value);
+      const y = parseFloat(document.getElementById('deliveryCharge').value);
+      const output = document.getElementById('output');
+
+      if (isNaN(x) || isNaN(y)) {
+        output.innerHTML = "<p>Please enter valid numbers for both fields.</p>";
+        return;
+      }
+
+      const totalXY = x + y;
+      const fivePercent = x * 0.05;
+      const extraDiscount = (3 * fivePercent) / 5;
+      const finalCost = totalXY - extraDiscount;
+
+      output.innerHTML = `
+        <div class="main-title">💰 Total cost of this phone for you:</div>
+        <div class="total-box">₹${finalCost.toFixed(2)}</div>
+        
+        <div class="discount-highlight">
+          🎉 Extra Discount Won: ₹${extraDiscount.toFixed(2)}
+        </div>
+
+        <div class="small-text">
+          🧾 Full Calculation Details:<br>
+          • Phone Cost (x): ₹${x.toFixed(2)}<br>
+          • Delivery Charge (y): ₹${y.toFixed(2)}<br>
+          • Total Before Discount (x + y): ₹${totalXY.toFixed(2)}<br>
+          • 5% of x: ₹${fivePercent.toFixed(2)}<br>
+          • Final Discount Component: ₹${extraDiscount.toFixed(2)}<br>
+          • Calculation: x + y − [(3 × 5% of x) ÷ 5]
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
